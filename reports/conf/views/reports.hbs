@@ -1,0 +1,33 @@
+<div style="padding: 15px">
+    {{#each data}}
+<div class="card">
+    <div class="card-content">
+        <table class="striped centered">
+            <thead>
+                <tr>
+                    <th>
+                        <h5>{{ this.name }} Status</h5>
+                    </th>
+                </tr>
+            </thead>
+            <thead>
+                <tr>
+                    {{#each this.columns}}
+                    <th>{{this}}</th>
+                    {{/each}}
+                </tr>
+            </thead>
+            <tbody>
+                {{#each this.cameras}}
+                <tr tabindex="0">
+                    {{#each this}}
+                    <td >{{this}}</td>
+                    {{/each}}
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
+    {{/each}}
+</div>

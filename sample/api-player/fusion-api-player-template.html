@@ -1,0 +1,81 @@
+<style>
+  body {
+    margin: 0px
+  }
+  iframe {
+    width: 100vw;
+    height: 100vh;
+    border: none;
+  }
+</style>
+    
+<div id="players"></div>
+    
+<script>
+    /*
+    * fusion-iframe-example.html
+    * Author: Evan Callaway
+    * Version: 1.0
+    *
+    * Copyright 2017 IPConfigure, Inc.
+    *
+    * An example file demonstrating how to play Orchid streams through Fusion within an iframe.
+    *
+    */
+
+    var fusionUri = '%FUSION_URI%';
+
+    // Pass Fusion auth token into the frame.
+    function setJWT(frame, jwt) {
+        frame.contentWindow.postMessage({'jwt': jwt}, '*');
+    }
+
+    // Pass an auth token into the Fusion iframe
+    function init(frame) {
+        getFusionToken(function(token) {
+            setJWT(frame, token);
+        });
+    }
+
+    /*
+    * Authenticate with Fusion and get an auth token
+    *
+    */
+    function getFusionToken(callback) {
+        var data = JSON.stringify({
+        "username": "admin",
+        "password": "tpain"
+        });
+
+        // create AJAX request to authenticate with Fusion
+        var xhttp = new XMLHttpRequest();
+        xhttp.withCredentials = true;
+        xhttp.open("POST", fusionUri + "/fusion/users/login");
+        xhttp.setRequestHeader("content-type", "application/json");
+        xhttp.onreadystatechange = function() {
+            if (this.readyState === 4 && xhttp.status === 200) {
+                callback(JSON.parse(xhttp.responseText)["token"]);
+            }
+        };
+        xhttp.send(data);
+    }
+
+    // Create an iframe for the player.
+    var frame = document.createElement('iframe');
+
+    // Only attempt to set auth after Fusion has loaded.
+    frame.setAttribute('onload', 'init(this)');
+
+    /*
+    * Set iframe source for your streams.  See Orchid API documentation for obtaining stream ids.
+    *
+    * format: http(s)://fusion-uri/?single-player-orchid=<orchid-id>&single-player=<stream-id>[&hide-controls=true][&hide-timeline=true][&single-player-ptz=true]
+    *
+    */
+    
+    frame.src = fusionUri + "/?single-player-orchid=%ORCHID_ID%&single-player=%STREAM_ID%%OPTIONS%";
+
+    // Add Orchid iframe(s) to the page.
+    var container = document.getElementById('players');
+    container.appendChild(frame);
+</script>

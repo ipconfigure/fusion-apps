@@ -1,0 +1,32 @@
+{
+	"id": "reports",
+	"version": "0.1.0",
+	"rootpath": "reports",
+	"name": "Reports",
+	"description": "Proxied application sample",
+	"server": {
+		"baseuri": "http://localhost:3000/",
+		"headers": ["fsid b93ccf7f-a9f0-453b-95af-afa27a2859bb"]
+	},
+	"extensions": [
+		{
+			"point": "nav-menu",
+			"extension": {
+				"name": "Camera Status",
+				"route": "camera-status",
+				"source": "camera-status.html",
+				"iconSource": "/fusion/plugin-proxy/reports/rocket.svg",
+				"type": "frame"
+			}
+		},
+		{
+			"point": "nav-menu",
+			"extension": {
+				"name": "Unavailable",
+				"route": "unavailable",
+				"source": "unavailable.html",
+				"type": "frame"
+			}
+		}
+	]
+}

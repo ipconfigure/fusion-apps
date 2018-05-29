@@ -1,0 +1,13 @@
+body {
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+h2 {
+    width: 100%;
+    text-align: center;
+}
+
+.content-column {
+    text-align: center;
+}
+
