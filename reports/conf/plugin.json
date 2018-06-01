@@ -15,7 +15,7 @@
 				"name": "Camera Status",
 				"route": "camera-status",
 				"source": "camera-status.html",
-				"iconSource": "/fusion/plugin-proxy/reports/rocket.svg",
+				"iconSource": "reports/rocket.svg",
 				"type": "frame"
 			}
 		},

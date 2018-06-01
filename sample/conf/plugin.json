@@ -11,8 +11,7 @@
 				"name": "API Player Generator",
 				"route": "api-player",
 				"source": "api-player/api-player-generator.html",
-				"type": "frame",
-				"iconSource": "images/turtle-land.svg"
+				"type": "frame"
 			}
         },
         {
