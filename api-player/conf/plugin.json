@@ -1,0 +1,18 @@
+{
+	"id": "sampleapiplayergenerator",
+	"version": "0.1.0",
+	"rootpath": "sample-apiplayer-generator",
+	"name": "API Player Generator",
+	"description": "Pick a server and a camera, put in your credentials, and generate working code for playing video in an iframe at the push of a button.",
+	"extensions": [
+		{
+			"point": "nav-menu",
+			"extension": {
+				"name": "API Player Generator",
+				"route": "api-player",
+				"source": "api-player-generator.html",
+				"type": "frame"
+			}
+        }
+	]
+}

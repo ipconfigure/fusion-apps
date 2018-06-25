@@ -1,26 +1,26 @@
 <html>
     <head>
-        <link type="text/css" rel="stylesheet" href="../materialize/css/materialize.min.css"  media="screen,projection"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
     </head>
     <body style="padding: 15px">
         <div class="card">
             <div class="card-content">
                 <div class="input-field">
-                    <select class="select-dropdown dropdown-trigger" id="cameras-list" onchange="buildApiPlayer()">
+                    <select class="select-dropdown dropdown-trigger" id="cameras-list">
                     </select>
                     <label>Camera</label>            
                 </div>
                 <div class="input-field">
-                    <input id="username" type="text" class="validate" onchange="buildApiPlayer()">
+                    <input id="username" type="text" class="validate">
                     <label for="username">Fusion Username</label>
                 </div>
                 <div class="input-field">
-                    <input id="password" type="text" class="validate" onchange="buildApiPlayer()">
+                    <input id="password" type="text" class="validate">
                     <label for="password">Fusion Password (warning: will appear in plaintext)</label>
                 </div>
 
                 <div class="input-field">
-                    <select class="select-dropdown dropdown-trigger" id="type-list" onchange="buildApiPlayer()">
+                    <select class="select-dropdown dropdown-trigger" id="type-list">
                         <option value="fusion">Fusion</option>
                         <option value="orchid">Orchid</option>
                     </select>
@@ -29,43 +29,44 @@
 
                 <div>
                     <p>
-                        <label onclick="buildApiPlayer()">
+                        <label>
                             <input type="checkbox" id="single-player-ptz" class="filled-in option-checkbox"/>
                             <span>Enable PTZ</span>
                         </label>
                     </p>
                     <p>
-                        <label onclick="buildApiPlayer()">
+                        <label>
                             <input type="checkbox" id="force-fbgst" class="filled-in option-checkbox"/>
                             <span>Enable FBGST</span>
                         </label>
                     </p>
                     <p>
-                        <label onclick="buildApiPlayer()">
+                        <label>
                             <input type="checkbox" id="hide-timeline" class="filled-in option-checkbox"/>
                             <span>Hide Timeline</span>
                         </label>
                     </p>
                     <p>
-                        <label onclick="buildApiPlayer()">
+                        <label>
                             <input type="checkbox" id="hide-controls" class="filled-in option-checkbox"/>
                             <span>Hide Controls</span>
                         </label>
                     </p>
                     <p>
-                        <label onclick="buildApiPlayer()">
+                        <label>
                             <input type="checkbox" id="show-header" class="filled-in option-checkbox"/>
                             <span>Show Player Header</span>
                         </label>
                     </p>
                 </div>
+                <a class="waves-effect waves-light btn" style="margin-top: 20px" onclick="buildApiPlayer()">Generate API Player</a>
 
-                <iframe id="player-container" style="width: 640px; height: 480px; margin: 20px 0px; border: none;"></iframe>
-                <div id="source-container" style="white-space: pre; background: antiquewhite; padding: 10px; border: 1px solid #888;"></div>
+                <iframe id="player-container" style="width: 640px; height: 480px; margin: 20px 0px; border: none; display: none"></iframe>
+                <div id="source-container" style="white-space: pre; background: antiquewhite; padding: 10px; border: 1px solid #888; display: none"></div>
             </div>
         </div>
 
         <script type="text/javascript" src="api-player-generator.js"></script>
-        <script type="text/javascript" src="../materialize/js/materialize.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
     </body>
 </html>

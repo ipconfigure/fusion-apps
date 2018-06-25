@@ -23,6 +23,7 @@ function buildApiPlayer() {
     if (usernameInput.value.length < 1 ||  passwordInput.value.length < 1) {
         playerContainer.style.display = "none";
         sourceContainer.style.display = "none";
+        alert("Please specify a username and a password");
         resizeFrame();
         return;
     }
@@ -43,11 +44,12 @@ function buildApiPlayer() {
         }
     }
 
+    // Grab the appropriate template for our player type
     templateRequest.open("GET", typeSelect.value + "-api-player-template.html");
     templateRequest.withCredentials = true;                
     templateRequest.onreadystatechange = function() {
         if (templateRequest.readyState === 4 && templateRequest.status === 200) {
-                // Success-- retrieve our JWT from the response
+                // We have our template.  Fill it in with user supplied values.
                 playerSource = templateRequest.responseText;
 
                 playerSource = playerSource.replace("%STREAM_ID%", streamId);
@@ -68,11 +70,12 @@ function buildApiPlayer() {
 }
 
 function fetchOrchids(callback) {
+    // This request is performed using the signed-in user's cookie
     request.open("GET", "/fusion/orchids", true);
     request.withCredentials = true;                
     request.onreadystatechange = function() {
         if (request.readyState === 4 && request.status === 200) {
-                // Success-- retrieve our JWT from the response
+                // Success-- retrieve our Orchid Core list from the response
                 orchids = JSON.parse(request.responseText);
 
                 callback();
@@ -110,7 +113,6 @@ function populateList() {
     M.FormSelect.init(cameraSelect, {});
     M.FormSelect.init(typeSelect, {});
     M.updateTextFields();
-    buildApiPlayer();
 }
 
 function resizeFrame() {

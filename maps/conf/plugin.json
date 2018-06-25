@@ -1,0 +1,19 @@
+{
+	"id": "samplemaps",
+	"version": "0.1.0",
+	"rootpath": "sample-maps",
+	"name": "Map View",
+	"description": "A naive approach to showing cameras on a map",
+	"extensions": [
+        {
+			"point": "nav-menu",
+			"extension": {
+				"name": "Map View",
+				"route": "maps",
+				"source": "maps.html",
+				"type": "frame",
+                "iconSource": "sample-maps/map-marker.svg"
+			}
+		}
+	]
+}
