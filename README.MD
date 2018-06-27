@@ -1,17 +1,18 @@
-# Get Started with Fusion App
+# Get Started with an Orchid Fusion App
 
 ## Prerequisites
 1. Obtain provider signature from IPConfigure, Inc.
 2. Configure Orchid Fusion's plugin directory
-    * Open fusion.properties file
+    * Open the fusion.properties file
     * Add `fusion.plugins.path` line pointing to plugins folder
 
         
 ```
-fusion.plugins.path=G:\\source\\fusion-apps
+fusion.plugins.path=G:\\fusion-apps
 ```
 3. Restart Orchid Fusion Server
 
+---
 
 ## Create the Hello World App
 1.  Create a folder structure for your HelloWorld App inside the plugin directory
@@ -60,7 +61,9 @@ fusion.plugins.path=G:\\source\\fusion-apps
 
 ## Communicating with Orchid Fusion
 
-An App that can't communicate isn't very useful. So let's modify Hello World to retrieve the current logged in user and display information. Because this App is hosted on the same server we can rely on the authentication headers to verify that we are a valid user with the same permissions in Orchid Fusion.
+An App that can't communicate isn't very useful, so let's modify Hello World to retrieve the current logged in user and display information about the Orchid Core VMS's. Because this App is hosted on the same server we can rely on the authentication headers to verify that we are a valid user with the same permissions in Orchid Fusion. 
+
+*Note: If your App will be communicating with an external server/service you will need to retrieve the fsid from the request headers and pass it along before your server/service will be able to communicate with the Orchid Fusion server. This token expires so you will need to pass it along with each request rather than storing it locally.*
 
 1.  Inside the *web* folder create a file called `hello-world.js`
 
