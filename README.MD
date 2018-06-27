@@ -16,9 +16,9 @@ fusion.plugins.path=G:\\fusion-apps
 
 ## Create the Hello World App
 1.  Create a folder structure for your HelloWorld App inside the plugin directory
-    * Create a folder called `HelloWorld`
-    * Inside the `HelloWorld` folder create folders called `conf` and `web`
-2.  Inside the *conf* folder, create a plugin.json file
+    * Create a folder called `<plugin directory>/HelloWorld`
+    * Create `HelloWorld/conf` and `HelloWorld/web` folders
+2.  Create a `conf/plugin.json` file
     * Paste these contents into the *plugin.json* file
     ```
     {
@@ -43,7 +43,7 @@ fusion.plugins.path=G:\\fusion-apps
     ```
     * Be sure to replace the `<provider signature>` with the one you received from IPConfigure, Inc.
 
-3.  Inside the *web* folder, create a file named `hello-world.html` 
+3.  Create a file named `web/hello-world.html` 
     * Copy the following contents into *hello-world.html*
     ```
     <html>
@@ -65,7 +65,7 @@ An App that can't communicate isn't very useful, so let's modify Hello World to 
 
 *Note: If your App will be communicating with an external server/service you will need to retrieve the fsid from the request headers and pass it along before your server/service will be able to communicate with the Orchid Fusion server. This token expires so you will need to pass it along with each request rather than storing it locally.*
 
-1.  Inside the *web* folder create a file called `hello-world.js`
+1.  Create a file called `web/hello-world.js`
 
     * Copy the following contents into *hello-world.js*
     ```
@@ -166,6 +166,4 @@ An App that can't communicate isn't very useful, so let's modify Hello World to 
     ```
 3.  Restart Orchid Fusion server.
 
-4.  Browse to Orchid Fusion and you should see Hello World under the Apps menu.
-
-5.  Click on the menu item to see Hello World.
+4.  Click on the Hello World menu item to see the changes you just made.
