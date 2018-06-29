@@ -85,7 +85,7 @@ app.listen(port, (err) => {
 })
 
 function getOrchids(request) {
-    return axios.get(request.fusionHost + 'fusion/orchids', {
+    return axios.get(request.fusionHost + 'service/orchids', {
         headers: {
             Cookie: 'fsid=' + request.headers.fsid
         }

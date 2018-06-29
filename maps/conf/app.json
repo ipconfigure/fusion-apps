@@ -4,6 +4,9 @@
 	"rootpath": "sample-maps",
 	"name": "Map View",
 	"description": "A naive approach to showing cameras on a map",
+    "provider": { 
+        "replace": " this with your plugin signature provided by IPConfigure, Inc." 
+    },
 	"extensions": [
         {
 			"point": "nav-menu",
@@ -11,8 +14,7 @@
 				"name": "Map View",
 				"route": "maps",
 				"source": "maps.html",
-				"type": "frame",
-                "iconSource": "sample-maps/map-marker.svg"
+				"type": "frame"
 			}
 		}
 	]

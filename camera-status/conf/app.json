@@ -4,6 +4,9 @@
 	"rootpath": "sample-camera-status",
 	"name": "Camera Status",
 	"description": "Proxied application sample",
+    "provider": { 
+        "replace": " this with your plugin signature provided by IPConfigure, Inc." 
+    },
 	"server": {
 		"baseuri": "http://localhost:3000/"
 	},
