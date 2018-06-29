@@ -14,7 +14,7 @@ app.engine('.hbs', exphbs({
 app.set('view engine', '.hbs')
 app.set('views', path.join(__dirname, 'views'))
 
-app.use(express.static('static'))
+//app.use(express.static('static'))
 
 app.use((request, response, next) => {
     
@@ -22,9 +22,6 @@ app.use((request, response, next) => {
 
     if (request.method !== 'HEAD' && request.headers.fsid === undefined) {
         console.warn('no fsid', request.url);
-        //request.fsid = 'cdaf4871-a912-46f9-8e86-d2580e78d480';
-        // response.sendStatus(401);
-        // return;
     }
     
     next()
