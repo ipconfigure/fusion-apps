@@ -34,6 +34,10 @@ app.use((request, response, next) => {
     next()
 })
 
+app.get('/time', (request, response) => {
+    response.send(new Date());
+});
+
 app.get('/camera-status.html', (request, response) => {
     if (request.method === 'HEAD') {
         response.sendStatus(200)

@@ -4,7 +4,7 @@
 	"rootpath": "sample-maps",
 	"name": "Map View",
 	"description": "A naive approach to showing cameras on a map",
-    "provider": { 
+    "provider": {
         "replace": " this with your plugin signature provided by IPConfigure, Inc." 
     },
 	"extensions": [
@@ -14,7 +14,8 @@
 				"name": "Map View",
 				"route": "maps",
 				"source": "maps.html",
-				"type": "frame"
+                "type": "frame",
+                "iconSource": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTc5MiIgaGVpZ2h0PSIxNzkyIiB2aWV3Qm94PSIwIDAgMTc5MiAxNzkyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0xMTUyIDY0MHEwLTEwNi03NS0xODF0LTE4MS03NS0xODEgNzUtNzUgMTgxIDc1IDE4MSAxODEgNzUgMTgxLTc1IDc1LTE4MXptMjU2IDBxMCAxMDktMzMgMTc5bC0zNjQgNzc0cS0xNiAzMy00Ny41IDUydC02Ny41IDE5LTY3LjUtMTktNDYuNS01MmwtMzY1LTc3NHEtMzMtNzAtMzMtMTc5IDAtMjEyIDE1MC0zNjJ0MzYyLTE1MCAzNjIgMTUwIDE1MCAzNjJ6Ii8+PC9zdmc+"
 			}
 		}
 	]
