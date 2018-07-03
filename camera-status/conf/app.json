@@ -4,7 +4,7 @@
 	"rootpath": "sample-camera-status",
 	"name": "Camera Status",
 	"description": "Proxied application sample",
-    "provider": {
+        "provider": {
         "replace": " this with your App signature provided by IPConfigure, Inc." 
 	},
 	"server": {
