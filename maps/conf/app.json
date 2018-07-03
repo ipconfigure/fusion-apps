@@ -5,7 +5,7 @@
 	"name": "Map View",
 	"description": "A naive approach to showing cameras on a map",
     "provider": {
-        "replace": " this with your plugin signature provided by IPConfigure, Inc." 
+        "replace": " this with your App signature provided by IPConfigure, Inc." 
     },
 	"extensions": [
         {

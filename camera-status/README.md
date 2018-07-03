@@ -1,5 +1,5 @@
 ### Running locally
-Run these commands to set up the plugin:
+Run these commands to set up the App:
 
 ```
 copy to the directory configured for Fusion apps

@@ -26,7 +26,7 @@
     function getTime() {
         var request = new XMLHttpRequest();
 
-        request.open("GET", "/service/plugin-proxy/sample-camera-status/time", true);
+        request.open("GET", "/service/app-proxy/sample-camera-status/time", true);
         request.onreadystatechange = function() {
             if (request.readyState === 4 && request.status === 200) {
                 var response = JSON.parse(request.responseText);

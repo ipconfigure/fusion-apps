@@ -5,7 +5,7 @@
 	"name": "Unavailable",
     "description": "A sample application that is missing its contents",
     "provider": { 
-        "replace": " this with your plugin signature provided by IPConfigure, Inc." 
+        "replace": " this with your App signature provided by IPConfigure, Inc." 
     },
 	"extensions": [
 		{

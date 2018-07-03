@@ -2,23 +2,23 @@
 
 ## Prerequisites
 1. Obtain provider signature from IPConfigure, Inc.
-2. Configure Orchid Fusion's plugin directory
+2. Configure Orchid Fusion's App directory
     * Open the fusion.properties file
-    * Add *fusion.plugins.path* line pointing to plugins folder
+    * Add *fusion.apps.path* line pointing to Apps folder
         
 ```
-fusion.plugins.path=G:\\fusion-apps
+fusion.apps.path=G:\\fusion-apps
 ```
 3. Restart Orchid Fusion Server
 
 ---
 
 ## Create the Hello World App
-1.  Create a folder structure for your HelloWorld App inside the plugin directory
-    * Create a *\<plugin directory>/HelloWorld* folder
+1.  Create a folder structure for your HelloWorld App inside the App directory
+    * Create a *\<app directory>/HelloWorld* folder
     * Create *HelloWorld/conf* and *HelloWorld/web* folders
-2.  Create a *conf/plugin.json* file
-    * Paste these contents into the *plugin.json* file
+2.  Create a *conf/app.json* file
+    * Paste these contents into the *app.json* file
     ```
     {
         "id": "helloworld", //this can contain only lowercase letters, numbers and periods

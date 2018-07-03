@@ -5,7 +5,7 @@
 	"name": "Camera Status",
 	"description": "Proxied application sample",
     "provider": {
-        "replace": " this with your plugin signature provided by IPConfigure, Inc." 
+        "replace": " this with your App signature provided by IPConfigure, Inc." 
 	},
 	"server": {
 		"baseuri": "http://localhost:3000/"
