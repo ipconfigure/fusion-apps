@@ -5,7 +5,7 @@
 	"name": "Camera Status",
 	"description": "Proxied application sample",
         "provider": {
-        "replace": " this with your App signature provided by IPConfigure, Inc." 
+        	"replace": " this with your App signature provided by IPConfigure, Inc." 
 	},
 	"server": {
 		"baseuri": "http://localhost:3000/"
@@ -17,7 +17,7 @@
 				"name": "Camera Status",
 				"route": "camera-status",
 				"source": "camera-status.html",
-                "iconSource": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTc5MiIgaGVpZ2h0PSIxNzkyIiB2aWV3Qm94PSIwIDAgMTc5MiAxNzkyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik03NjggODkwbDU0NiA1NDZxLTEwNiAxMDgtMjQ3LjUgMTY4dC0yOTguNSA2MHEtMjA5IDAtMzg1LjUtMTAzdC0yNzkuNS0yNzkuNS0xMDMtMzg1LjUgMTAzLTM4NS41IDI3OS41LTI3OS41IDM4NS41LTEwM3Y3NjJ6bTE4NyA2aDc3M3EwIDE1Ny02MCAyOTguNXQtMTY4IDI0Ny41em03MDktMTI4aC03Njh2LTc2OHEyMDkgMCAzODUuNSAxMDN0Mjc5LjUgMjc5LjUgMTAzIDM4NS41eiIvPjwvc3ZnPg==",
+                		"iconSource": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTc5MiIgaGVpZ2h0PSIxNzkyIiB2aWV3Qm94PSIwIDAgMTc5MiAxNzkyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik03NjggODkwbDU0NiA1NDZxLTEwNiAxMDgtMjQ3LjUgMTY4dC0yOTguNSA2MHEtMjA5IDAtMzg1LjUtMTAzdC0yNzkuNS0yNzkuNS0xMDMtMzg1LjUgMTAzLTM4NS41IDI3OS41LTI3OS41IDM4NS41LTEwM3Y3NjJ6bTE4NyA2aDc3M3EwIDE1Ny02MCAyOTguNXQtMTY4IDI0Ny41em03MDktMTI4aC03Njh2LTc2OHEyMDkgMCAzODUuNSAxMDN0Mjc5LjUgMjc5LjUgMTAzIDM4NS41eiIvPjwvc3ZnPg==",
 				"type": "frame"
 			}
 		}
