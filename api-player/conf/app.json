@@ -4,9 +4,9 @@
 	"rootpath": "sample-apiplayer-generator",
 	"name": "API Player Generator",
 	"description": "Pick a server and a camera, put in your credentials, and generate working code for playing video in an iframe at the push of a button.",
-    "provider": { 
-        "replace": " this with your App signature provided by IPConfigure, Inc." 
-    },
+	"provider": { 
+        	"replace": " this with your App signature provided by IPConfigure, Inc." 
+	},
 	"extensions": [
 		{
 			"point": "nav-menu",
@@ -16,6 +16,6 @@
 				"source": "api-player-generator.html",
 				"type": "frame"
 			}
-        }
+        	}
 	]
 }
