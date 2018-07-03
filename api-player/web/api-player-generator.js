@@ -78,7 +78,13 @@ function fetchOrchids(callback) {
                 // Success-- retrieve our Orchid Core list from the response
                 orchids = JSON.parse(request.responseText);
 
-                callback();
+                if (orchids.length > 0) {
+                    callback();
+                } else {
+                    var container = document.getElementById('api-player-generator');
+                    container.innerHTML = 'Please register an Orchid before using this app.';
+                    container.style = 'text-align: center; background-color: orange';
+                }
         }
     };
     request.send();
