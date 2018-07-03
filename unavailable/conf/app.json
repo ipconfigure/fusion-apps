@@ -1,19 +1,22 @@
 {
-	"id": "unavailable",
-	"version": "0.1.0",
-	"rootpath": "unavailable",
-	"name": "Unavailable",
-	"description": "A sample application that is missing its contents",
-	"extensions": [
-		{
-			"point": "nav-menu",
-			"extension": {
-				"name": "Unavailable",
-				"route": "unavailable",
-				"source": "unavailable.html",
+    "id": "unavailable",
+    "version": "0.1.0",
+    "rootpath": "unavailable",
+    "name": "Unavailable",
+    "description": "A sample application that is missing its contents",
+    "provider": { 
+        "replace": "this with your App signature provided by IPConfigure, Inc." 
+    },
+    "extensions": [
+        {
+            "point": "nav-menu",
+            "extension": {
+                "name": "Unavailable",
+                "route": "unavailable",
+                "source": "unavailable.html",
                 "type": "frame",
                 "iconSource": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTc5MiIgaGVpZ2h0PSIxNzkyIiB2aWV3Qm94PSIwIDAgMTc5MiAxNzkyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0xMDI0IDEzNzV2LTE5MHEwLTE0LTkuNS0yMy41dC0yMi41LTkuNWgtMTkycS0xMyAwLTIyLjUgOS41dC05LjUgMjMuNXYxOTBxMCAxNCA5LjUgMjMuNXQyMi41IDkuNWgxOTJxMTMgMCAyMi41LTkuNXQ5LjUtMjMuNXptLTItMzc0bDE4LTQ1OXEwLTEyLTEwLTE5LTEzLTExLTI0LTExaC0yMjBxLTExIDAtMjQgMTEtMTAgNy0xMCAyMWwxNyA0NTdxMCAxMCAxMCAxNi41dDI0IDYuNWgxODVxMTQgMCAyMy41LTYuNXQxMC41LTE2LjV6bS0xNC05MzRsNzY4IDE0MDhxMzUgNjMtMiAxMjYtMTcgMjktNDYuNSA0NnQtNjMuNSAxN2gtMTUzNnEtMzQgMC02My41LTE3dC00Ni41LTQ2cS0zNy02My0yLTEyNmw3NjgtMTQwOHExNy0zMSA0Ny00OXQ2NS0xOCA2NSAxOCA0NyA0OXoiLz48L3N2Zz4="
-			}
-		}
+            }
+        }
     ]
 }

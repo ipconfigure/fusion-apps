@@ -1,9 +1,42 @@
 <html>
   <head>
     <title>Custom Reports</title>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
   </head>
   <body>
     {{{body}}}
+
+    <div id="current-time" style="display:flex; justify-content: center;">
+        
+    </div>
   </body>
+  <script>
+    var counter = 0;
+    var i = setInterval(function(){
+        // do your thing
+        getTime();
+
+        counter++;
+        if(counter === 10) {
+            clearInterval(i);
+        }
+    }, 5000);
+
+
+    function getTime() {
+        var request = new XMLHttpRequest();
+
+        request.open("GET", "/service/app-proxy/sample-camera-status/time", true);
+        request.onreadystatechange = function() {
+            if (request.readyState === 4 && request.status === 200) {
+                var response = JSON.parse(request.responseText);
+
+                var currentTime = document.getElementById('current-time');
+                currentTime.innerHTML = 'The current server time is ' + response;
+            }
+        };
+        request.send();
+    }
+
+  </script>
 </html>

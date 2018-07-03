@@ -34,7 +34,9 @@ function fetchOrchids(callback) {
                 // Success-- retrieve our Orchid Core list from the response
                 orchids = JSON.parse(request.responseText);
 
-                callback();
+                if (orchids.length > 0) {
+                    callback();
+                }
         }
     };
     request.send();
