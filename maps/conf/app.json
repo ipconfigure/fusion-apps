@@ -4,9 +4,9 @@
     "rootpath": "sample-maps",
     "name": "Map View",
     "description": "A naive approach to showing cameras on a map",
-        "provider": {
-                "replace": " this with your App signature provided by IPConfigure, Inc." 
-        },
+    "provider": {
+        "replace": "this with your App signature provided by IPConfigure, Inc." 
+    },
     "extensions": [
             {
             "point": "nav-menu",
