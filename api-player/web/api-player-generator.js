@@ -125,4 +125,6 @@ function resizeFrame() {
     parent.postMessage({ type: 'resize' }, window.location.origin);
 }
 
-fetchOrchids(populateList);
+window.onload = function() {
+    fetchOrchids(populateList);
+}
