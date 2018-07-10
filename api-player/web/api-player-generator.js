@@ -63,6 +63,7 @@ function buildApiPlayer() {
                 sourceText = document.createTextNode(playerSource);
                 sourceContainer.appendChild(sourceText);
                 playerContainer.contentWindow.document.write(playerSource);
+                playerContainer.contentWindow.document.close();
                 resizeFrame();
         }
     };
