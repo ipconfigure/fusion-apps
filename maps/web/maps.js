@@ -63,10 +63,11 @@ function initMarkers() {
     var cameras = orchids[0].cameras,
         infowindow = new google.maps.InfoWindow({
             content: "holding..."
-        });
+        }),
+        cameraCount = cameras.length > 2 ? 2 : cameras.length;
 
     // Throw the first two cameras from the first Orchid Core onto the map.
-    for (var i = 0; i < 2; ++i) {
+    for (var i = 0; i < cameraCount; ++i) {
         // Define a marker with an Orchid Fusion API player as content
         var marker = new google.maps.Marker({
             position: cameraPositions[i],
