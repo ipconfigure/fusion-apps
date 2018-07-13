@@ -52,6 +52,11 @@ function initMap() {
         center: ipconfigurePosition
     });
     fetchOrchids(initMarkers);
+
+    // make sure the map gets drawn
+    google.maps.event.addListenerOnce(map, 'idle', function() {
+        google.maps.event.trigger(map, 'resize');
+    });
 }
 
 function initMarkers() {
