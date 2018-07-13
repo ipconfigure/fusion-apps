@@ -42,9 +42,6 @@ function fetchOrchids(callback) {
     request.send();
 }
 
-    // This example displays a marker at the center of Australia.
-    // When the user clicks the marker, an info window opens.
-
 function initMap() {
     // Center the map on IPConfigure headquarters
     map = new google.maps.Map(document.getElementById('map'), {
@@ -56,6 +53,7 @@ function initMap() {
     // make sure the map gets drawn
     google.maps.event.addListenerOnce(map, 'idle', function() {
         google.maps.event.trigger(map, 'resize');
+        map.setZoom( map.getZoom() );
     });
 }
 
