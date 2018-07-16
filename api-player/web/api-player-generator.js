@@ -63,6 +63,7 @@ function buildApiPlayer() {
                 sourceText = document.createTextNode(playerSource);
                 sourceContainer.appendChild(sourceText);
                 playerContainer.contentWindow.document.write(playerSource);
+                playerContainer.contentWindow.document.close();
                 resizeFrame();
         }
     };
@@ -125,4 +126,6 @@ function resizeFrame() {
     parent.postMessage({ type: 'resize' }, window.location.origin);
 }
 
-fetchOrchids(populateList);
+window.onload = function() {
+    fetchOrchids(populateList);
+}

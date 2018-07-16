@@ -42,9 +42,6 @@ function fetchOrchids(callback) {
     request.send();
 }
 
-    // This example displays a marker at the center of Australia.
-    // When the user clicks the marker, an info window opens.
-
 function initMap() {
     // Center the map on IPConfigure headquarters
     map = new google.maps.Map(document.getElementById('map'), {
@@ -52,16 +49,23 @@ function initMap() {
         center: ipconfigurePosition
     });
     fetchOrchids(initMarkers);
+
+    // make sure the map gets drawn
+    google.maps.event.addListenerOnce(map, 'idle', function() {
+        google.maps.event.trigger(map, 'resize');
+        map.setZoom( map.getZoom() );
+    });
 }
 
 function initMarkers() {
     var cameras = orchids[0].cameras,
         infowindow = new google.maps.InfoWindow({
             content: "holding..."
-        });
+        }),
+        cameraCount = cameras.length > 2 ? 2 : cameras.length;
 
     // Throw the first two cameras from the first Orchid Core onto the map.
-    for (var i = 0; i < 2; ++i) {
+    for (var i = 0; i < cameraCount; ++i) {
         // Define a marker with an Orchid Fusion API player as content
         var marker = new google.maps.Marker({
             position: cameraPositions[i],
