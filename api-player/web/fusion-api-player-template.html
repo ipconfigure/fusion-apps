@@ -78,4 +78,11 @@
     // Add Orchid iframe(s) to the page.
     var container = document.getElementById('players');
     container.appendChild(frame);
+
+    // Player reports state using the postMessage API
+    window.addEventListener('message', function(messageEvent) {
+        var event = messageEvent.data.event;
+        console.log("Received " + event.component + " event: " + event.type);
+    });
+
 </script>
