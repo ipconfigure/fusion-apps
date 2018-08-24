@@ -4,7 +4,7 @@
 1. Obtain provider signature from IPConfigure, Inc.
 2. Configure Orchid Fusion's App directory
     * Open the fusion.properties file
-    * Add *fusion.apps.path* line pointing to Apps folder
+    * Add *fusion.apps.path* line pointing to Apps folder (IS THERE A DEFAULT??)
         
 ```
 fusion.apps.path=G:\\fusion-apps
@@ -23,8 +23,8 @@ fusion.apps.path=G:\\fusion-apps
     {
         "id": "helloworld", //this can contain only lowercase letters, numbers and periods
         "version": "0.1.0",
-        "rootpath": "hello-world",
-        "name": "HelloWorld",
+        "rootpath": "hello-world", // WHAT IS THIS?
+        "name": "HelloWorld", // WHAT IS THIS?
         "description": "Hello World Orchid Fusion App",
         "provider": <provider signature>,
         "extensions": [
@@ -32,9 +32,9 @@ fusion.apps.path=G:\\fusion-apps
                 "point": "nav-menu",
                 "extension": {
                     "name": "Hello World", //this will appear in the Menu
-                    "route": "hello-world",
-                    "source": "hello-world.html",
-                    "type": "frame"
+                    "route": "hello-world", // WHAT IS THIS
+                    "source": "hello-world.html", // WHAT IS THIS
+                    "type": "frame" // WHAT IS THIS
                 }
             }
         ]
@@ -63,6 +63,8 @@ fusion.apps.path=G:\\fusion-apps
 An App that can't communicate isn't very useful, so let's modify Hello World to retrieve the current logged in user and display information about the Orchid Core VMS's. Because this App is hosted on the same server we can rely on the authentication headers to verify that we are a valid user with the same permissions in Orchid Fusion. 
 
 *Note: If your App will be communicating with an external server/service you will need to retrieve the fsid from the request headers and pass it along before your server/service will be able to communicate with the Orchid Fusion server. This token expires so you will need to pass it along with each request rather than storing it locally.*
+
+LET'S DOCUMENT THE FOLLOWING CODE AND SHOW AN EXAMPLE FUNCTION FOR USING THE FSID
 
 1.  Create a file called *web/hello-world.js*
 
