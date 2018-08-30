@@ -1,12 +1,26 @@
 # Simple Camera Status Orchid Fusion App
 
 ## Objective
-This sample Orchid Fusion App, shows how to implement a server based 
+Demonstrate a simple camera status report implemented in a remote server based Orchid Fusion App.
 
 
- a simple camera status report by using a [Node.js](https://nodejs.org/en/) server application to provide more complex functionality. It uses the FSID, provided as a request header, to access the Orchid Fusion service API to retrieve status information. The results are then displayed using [Handlebars](https://handlebarsjs.com/) for templating and [Materialize](https://materializecss.com) to give it a common look and feel. 
+## something
+This sample uses a [Node.js](https://nodejs.org/en/) server to provide more complex functionality. Node.js was chosen for this sample but is not a requirement, any http server and related technologies are suitable. It hosts a /camera-status.html page and a /time endpoint showing how to server up an html page via Orchid Fusion as well as using the app-proxy to make calls back to the endpoint. 
 
-*Note: Orchid Fusion Apps are not limited to using these development tools. Any http server based technology is suitable for use.*
+### app.js
+This Node.js application serves the /camera-status.html page that will be rendered by loading [Handlebars](https://handlebarsjs.com/) template files and styled using [Materialize](https://materializecss.com) to give it a common look and feel with Orchid Fusion. The information displayed is retrieved by using the `fsid` request header which gives access to the Orchid Fusion API. The fsid is for the currently logged in user and will only return resources authorized for that user. See the API documentation for more information.
+
+Also hosted by this application is a /time endpoint to demonstrate calling back to the server using the app-proxy from the client browser.
+
+### views/layouts/main.hbs
+To avoid Cross Site Scripting (CORS) errors, Orchid Fusion provides an app-proxy that can be used to make requests from the client back to our /time service. The format of the app-proxy url is:
+
+`http(s)://[orchid-fusion-server]/service/app-proxy/[rootpath]/[path/to/resource]`
+
+When retrieving resources from the application server it is recommended to use the app-proxy.
+
+### views/reports.hbs
+Handlebars template file 
 
 ## Prerequisites
 Install Node.js (which includes npm) from <https://nodejs.org/en/download/>
@@ -39,4 +53,4 @@ Install Node.js (which includes npm) from <https://nodejs.org/en/download/>
 2. Copy the conf folder into the camera-status directory.
 3. Copy the server folder to the desired server location. Note: if deploying to a different server, don't forget to update the `server.baseuri` setting in your `conf/app.json` file.
 4. In the server folder run `npm install`
-5. To start the application, in the server folder,  run `node index.js`
+5. To start the application, in the server folder,  run `node app.js`
