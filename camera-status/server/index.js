@@ -11,42 +11,41 @@ app.engine('.hbs', exphbs({
     extname: '.hbs',
     layoutsDir: path.join(__dirname, 'views/layouts')
 }))
+
 app.set('view engine', '.hbs')
 app.set('views', path.join(__dirname, 'views'))
 
-//app.use(express.static('static'))
-
 app.use((request, response, next) => {
-    
-    var cookies = request.headers.cookie.split('; ');
-
+    //verify that we have an fsid in the headers
     if (request.method !== 'HEAD' && request.headers.fsid === undefined) {
         console.warn('no fsid', request.url);
     }
-    
-    next()
-})
 
-app.use((request, response, next) => {
-    
+    //use the referer to determine the Orchid Fusion server
     request.fusionHost = request.headers.referer;
 
     next()
 })
 
+//expose a service to allow the client to dynamically retrieve the time from the server
 app.get('/time', (request, response) => {
     response.send(new Date());
 });
 
+//expose a web page that will be displayed inside Orchid Fusion
 app.get('/camera-status.html', (request, response) => {
     if (request.method === 'HEAD') {
         response.sendStatus(200)
         response.end();
         return;
     } 
+
+    // if the request came from Orchid Fusion, there will be an FSID in the headers.
     if (request.headers.fsid !== undefined) {
         getOrchids(request)
             .then(resp => {
+                //manipulate the orchid/camera information into the format
+                //used by the template
                 var reportData = [];
 
                 for (var i = 0; i < resp.data.length; i++) {
@@ -67,6 +66,7 @@ app.get('/camera-status.html', (request, response) => {
                     reportData.push(report);
                 }
 
+                //render the reports template
                 response.render('reports', {
                     header: 'Camera Status',
                     data: reportData,
@@ -80,6 +80,7 @@ app.get('/camera-status.html', (request, response) => {
     }
 });
 
+//start listening for requests
 app.listen(port, (err) => {
     if (err) {
         return console.log('something bad happened', err)
@@ -88,6 +89,8 @@ app.listen(port, (err) => {
     console.log(`server is listening on ${port}`)
 })
 
+//retrieve Orchids from the Orchid Fusion service api using the FSID that was supplied
+//via the request headers
 function getOrchids(request) {
     return axios.get(request.fusionHost + 'service/orchids', {
         headers: {

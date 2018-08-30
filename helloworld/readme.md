@@ -1,5 +1,8 @@
 # Get Started with an Orchid Fusion App
 
+## Objective
+Walk through the steps required to create a basic Orchid Fusion App. 
+
 ## Prerequisites
 1. Obtain provider signature from IPConfigure, Inc.
 2. Configure Orchid Fusion's App directory
