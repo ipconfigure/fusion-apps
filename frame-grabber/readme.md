@@ -1,7 +1,7 @@
-# Api Player Orchid Fusion App
+# Frame Grabber Orchid Fusion App
 
 ## Objective
-Create an Orchid Fusion Hosted App which generates html that can be used to embed an Orchid Fusion or Orchid Core player in another application. It demonstrates accessing the Orchid Fusion API to retrieve Orchid Core cameras and uses [Materialize](https://materializecss.com) to give it a common look and feel with Orchid Fusion.
+Create an Orchid Fusion Hosted App which demonstrates the use of the Orchid Core proxy to display a frame from each of camera. 
 
 ### Orchid Fusion Hosting
 All Orchid Fusion Apps need to be installed in their own folder underneath the `apps` directory which is configured in `fusion.properties`. The `app.json` configuration file resides in `apps/[rootpath]/conf`. For applications that are hosted by Orchid Fusion, the artifact files need to be located in the `apps/[rootpath]/web` folder. This folder is considered the base url for the application.
@@ -28,4 +28,4 @@ Since the page is loaded from the Orchid Fusion server in an iframe, authenticat
 
 2. Copy this folder into the apps directory configured in your fusion.properties file
 3. Restart Orchid Fusion
-4. Click on Map View menu item in Orchid Fusion
+4. Click on Grab Frames menu item in Orchid Fusion
