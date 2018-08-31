@@ -72,7 +72,7 @@ function buildApiPlayer() {
 
 function fetchOrchids(callback) {
     // This request is performed using the signed-in user's cookie
-    request.open("GET", "/fusion/orchids", true);
+    request.open("GET", "/service/orchids", true);
     request.withCredentials = true;                
     request.onreadystatechange = function() {
         if (request.readyState === 4 && request.status === 200) {

@@ -27,7 +27,7 @@ var map,
     ];
 
 function fetchOrchids(callback) {
-    request.open("GET", "/fusion/orchids", true);
+    request.open("GET", "/service/orchids", true);
     request.withCredentials = true;                
     request.onreadystatechange = function() {
         if (request.readyState === 4 && request.status === 200) {

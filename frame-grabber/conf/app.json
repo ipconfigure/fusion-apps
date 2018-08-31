@@ -1,0 +1,21 @@
+{
+    "id": "com.ipconfigure.framegrabber",
+    "version": "0.1.0",
+    "rootpath": "frame-grabber",
+    "name": "Frame Grabber",
+    "description": "Demonstrate how to talk to individual Orchids",
+    "provider": {
+        "replace": "this with your App signature provided by IPConfigure, Inc." 
+    },
+    "extensions": [
+        {
+            "point": "nav-menu",
+            "extension": {
+                "name": "Grab Frames",
+                "route": "frame-grabber",
+                "source": "frame-grabber.html",
+                "type": "frame"
+            }
+        }
+    ]
+}

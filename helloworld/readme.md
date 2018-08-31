@@ -1,13 +1,16 @@
 # Get Started with an Orchid Fusion App
 
+## Objective
+Walk through the steps required to create a basic Orchid Fusion Hosted App. 
+
 ## Prerequisites
 1. Obtain provider signature from IPConfigure, Inc.
 2. Configure Orchid Fusion's App directory
     * Open the fusion.properties file
-    * Add *fusion.apps.path* line pointing to Apps folder (IS THERE A DEFAULT??)
+    * Add *fusion.apps.path* line pointing to Apps folder (the default apps folder is located in the same directory as the fusion.properties file)
         
 ```
-fusion.apps.path=G:\\fusion-apps
+fusion.apps.path=/etc/opt/fusion/apps
 ```
 3. Restart Orchid Fusion Server
 
@@ -21,20 +24,20 @@ fusion.apps.path=G:\\fusion-apps
     * Paste these contents into the *app.json* file
     ```
     {
-        "id": "helloworld", //this can contain only lowercase letters, numbers and periods
+        "id": "helloworld",
         "version": "0.1.0",
-        "rootpath": "hello-world", // WHAT IS THIS?
-        "name": "HelloWorld", // WHAT IS THIS?
+        "rootpath": "hello-world",
+        "name": "HelloWorld",
         "description": "Hello World Orchid Fusion App",
         "provider": <provider signature>,
         "extensions": [
             {
                 "point": "nav-menu",
                 "extension": {
-                    "name": "Hello World", //this will appear in the Menu
-                    "route": "hello-world", // WHAT IS THIS
-                    "source": "hello-world.html", // WHAT IS THIS
-                    "type": "frame" // WHAT IS THIS
+                    "name": "Hello World",
+                    "route": "hello-world",
+                    "source": "hello-world.html",
+                    "type": "frame"
                 }
             }
         ]

@@ -1,0 +1,21 @@
+{
+    "id": "helloworld",
+    "version": "0.1.0",
+    "rootpath": "hello-world",
+    "name": "HelloWorld",
+    "description": "Hello World Orchid Fusion App",
+    "provider": {
+        "replace": "this with your App signature provided by IPConfigure, Inc." 
+    },
+    "extensions": [
+        {
+            "point": "nav-menu",
+            "extension": {
+                "name": "Hello World",
+                "route": "hello-world",
+                "source": "hello-world.html",
+                "type": "frame"
+            }
+        }
+    ]
+}
