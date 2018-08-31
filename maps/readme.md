@@ -26,7 +26,7 @@ Since the page is loaded from the Orchid Fusion server in an iframe, authenticat
 ```
 
 
-2. Obtain a Google Maps API key by going to [Google Maps Platform](https://cloud.google.com/maps-platform/) and follow the Get Started steps
+2. Obtain a Google API key by going to [Google Developers Console](https://console.developers.google.com/apis/credentials), you may need to create a new project
 3. Configure [maps.js](./web/maps.js) by replacing [your google maps key goes here] with your API key
 4. Copy this folder into the apps directory configured in your fusion.properties file
 5. Restart Orchid Fusion
