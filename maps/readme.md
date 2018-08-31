@@ -7,7 +7,7 @@ Create an Orchid Fusion Hosted App which demonstrates retrieving cameras using t
 All Orchid Fusion Apps need to be installed in their own folder underneath the `apps` directory which is configured in `fusion.properties`. The `app.json` configuration file belongs in `apps/[rootpath]/conf`. For applications that are hosted by Orchid Fusion, the artifact files need to be located in the `apps/[rootpath]/web` folder. This folder is considered the base url for the application.
 
 ### Authentication
-Since the page is loaded from the Orchid Fusion server in an iframe, authentication is already taken care of by the browser so any calls made to the Orchid Fusion service API will already have the current user's FSID authorization cookie. This means any resources (orchids, cameras, etc.) that user has access to can also be accessed by the app via the service API.
+Since the page is loaded from the Orchid Fusion server in an iframe, authentication is already taken care of by the browser, any calls made to the Orchid Fusion service API will already have the current user's FSID authorization cookie. This means any resources (orchids, cameras, etc.) that user has access to can also be accessed by the app via the service API.
 
 ## Prerequisites
 1. Replace the contents of the `provider` section in the conf/app.json file with the provider signature you received from IPConfigure, Inc.

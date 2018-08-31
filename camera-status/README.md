@@ -6,7 +6,7 @@ Create an Externally Hosted Orchid Fusion App which demonstrates using an extern
 ### External Hosting
 All Orchid Fusion Apps need to be installed in their own folder underneath the `apps` directory which is configured in `fusion.properties`. The `app.json` configuration file resides in `apps/[rootpath]/conf`. For applications that are hosted by Orchid Fusion. No other folders/files need to be located in the directory. For Orchid Fusion to be able to load the application, the `server` section needs to be defined in the `app.json` file. Instructions how to do this are listed in [Prerequisites](#prerequisites) section. 
 
-Externally hosted apps can be implemented utilizing any technology that can serve a web page, ex. IIS/C#, Apache/Java.
+Externally hosted apps can be implemented utilizing any technology that can serve a web page, ex. IIS/C#, Apache/Java. This application uses Node.js as the web server.
 
 ### Authentication
 Since the page is loaded from the Orchid Fusion server in an iframe but does not reside on the same server, authentication will have to be handled by code on the external server. Each request made through the app-proxy will have an `fsid` request header that can be used to access the Orchid Fusion API. This fsid has the same authorization as the current user and will have access to the same resources in Orchid Fusion.
@@ -19,14 +19,14 @@ This [Node.js](https://nodejs.org/en/) application serves the /camera-status.htm
 Also hosted by this application is a /time endpoint to demonstrate calling back to the server using the app-proxy from the client browser.
 
 ### views/layouts/main.hbs
-To avoid Cross Site Scripting (CORS) errors, Orchid Fusion provides an app-proxy that can be used to make requests from the client back to our /time service. The format of the app-proxy url is:
+This file is the main Handlebars template which contains basic functionality for the web page. To avoid Cross Site Scripting (CORS) errors, Orchid Fusion provides an app-proxy that can be used to make requests from the client back to our /time service. The format of the app-proxy url is:
 
 `http(s)://[orchid-fusion-server]/service/app-proxy/[rootpath]/[path/to/resource]`
 
 When retrieving resources from the application server it is recommended to use the app-proxy.
 
 ### views/reports.hbs
-Handlebars template file 
+This Handlebars template renders the camera status report
 
 ## Prerequisites
 1. Install Node.js (which includes npm) from <https://nodejs.org/en/download/>
