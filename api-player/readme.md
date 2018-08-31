@@ -28,4 +28,4 @@ Since the page is loaded from the Orchid Fusion server in an iframe, authenticat
 
 2. Copy this folder into the apps directory configured in your fusion.properties file
 3. Restart Orchid Fusion
-4. Click on Map View menu item in Orchid Fusion
+4. Click on Api Player Generator menu item in Orchid Fusion
