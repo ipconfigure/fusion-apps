@@ -1,53 +1,108 @@
 <style>
-  body {
-    margin: 0px
-  }
-  iframe {
-    width: 100vw;
-    height: 100vh;
-    border: none;
-  }
+    body {
+        margin: 0px
+    }
+    iframe {
+        width: 100vw;
+        height: 100vh;
+        border: none;
+    }
 </style>
-    
+
 <div id="players"></div>
-    
+
 <script>
     /*
     * fusion-iframe-example.html
     * Author: Evan Callaway
-    * Version: 1.0
+    * Version: 2.0
     *
     * Copyright 2017 IPConfigure, Inc.
-    *
-    * An example file demonstrating how to play Orchid streams through Fusion within an iframe.
-    *
     */
 
-    var fusionUri = '%FUSION_URI%';
+    // The video player will render inside this iframe.
+    var frame = document.createElement('iframe'),
 
-    // Pass Fusion auth token into the frame.
-    function setJWT(frame, jwt) {
-        frame.contentWindow.postMessage({'jwt': jwt}, '*');
+        // Where is my Orchid Fusion server?
+        fusionUri = '%FUSION_URI%',
+
+        /*
+        * The credentials for a user account on your Orchid Fusion server.
+        *
+        * Ideally this user should permissions restricted to just the camera or group of cameras you are viewing.
+        *
+        */
+        fusionUser = {
+            name: '%USERNAME%',
+            password: '%PASSWORD%'
+        };
+
+    /*
+    * Which camera from which Orchid Core do we want to play?
+    *
+    * Both of these fields are available from the /service/orchids endpoint.
+    * Please see the Orchid Core and Orchid Fusion API documentation (available at <your-server-uri>/api) for more information.
+    *
+    */
+    frame.camera = {
+        primaryStreamId: "%STREAM_ID%",
+        orchidId: "%ORCHID_ID%"
+    };
+
+    // How should this player behave?
+    frame.options = "%OPTIONS%";
+
+    /*
+    * Build a RFC4122 version 4 compliant UUID
+    *
+    * Source: https://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript
+    *
+    */
+    function uuidv4() { // Public Domain/MIT
+        var d = new Date().getTime();
+        if (typeof performance !== 'undefined' && typeof performance.now === 'function'){
+            d += performance.now(); //use high-precision timer if available
+        }
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+            var r = (d + Math.random() * 16) % 16 | 0;
+            d = Math.floor(d / 16);
+            return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+        });
     }
 
-    // Pass an auth token into the Fusion iframe
-    function init(frame) {
-        getFusionToken(function(token) {
-            setJWT(frame, token);
+    // Set the frame src (player begines loading) and fetch an auth token
+    function setupFrame(frame) {
+
+        // Make a random identifier so that we can find our frame later
+        frame.id = uuidv4();
+
+        frame.src = buildFrameSrc(frame);
+
+        // Create a promise to await our response from the Fusion server.
+        frame.playerAuthorizationTokenPromise = new Promise(function(resolve, reject) {
+            getFusionToken(function(token) {
+                frame.playerAuthorizationToken = token;
+                resolve();
+            });
         });
     }
 
     /*
-    * Authenticate with Fusion and get an auth token
+    * Authenticate with Fusion to get an auth token.
+    *
+    * This is done here for the sake of a self-contained example but should ideally be done by a server to avoid
+    * exposing the username and password to your users.
     *
     */
     function getFusionToken(callback) {
         var data = JSON.stringify({
-          "username": "%USERNAME%",
-          "password": "%PASSWORD%"
+            "username": fusionUser.name,
+            "password": fusionUser.password,
+            "expiresIn": "999999999",
+            "cookie": "session"
         });
 
-        // create AJAX request to authenticate with Fusion
+        // create an AJAX request to authenticate with Fusion
         var xhttp = new XMLHttpRequest();
         xhttp.withCredentials = true;
         xhttp.open("POST", fusionUri + "/fusion/users/login");
@@ -60,29 +115,83 @@
         xhttp.send(data);
     }
 
-    // Create an iframe for the player.
-    var frame = document.createElement('iframe');
-
-    // Only attempt to set auth after Fusion has loaded.
-    frame.setAttribute('onload', 'init(this)');
+    // Pass Orchid auth token into the frame using window.postMessage
+    function setJWT(frame) {
+        // Only pass the authorization token after this promise resolves.
+        frame.playerAuthorizationTokenPromise.then(function() {
+            frame.contentWindow.postMessage({'jwt': frame.playerAuthorizationToken}, '*');
+        });
+    }
 
     /*
-    * Set iframe source for your streams.  See Orchid API documentation for obtaining stream ids.
+    * Build the iframe src for your streams.
     *
-    * format: http(s)://fusion-uri/?single-player-orchid=<orchid-id>&single-player=<stream-id>[&hide-controls=true][&hide-timeline=true][&single-player-ptz=true]
+    * format: http(s)://orchid-uri/?single-player=<stream-id>[&hide-controls=true]
     *
     */
-    
-    frame.src = fusionUri + "/?single-player-orchid=%ORCHID_ID%&single-player=%STREAM_ID%%OPTIONS%";
+    function buildFrameSrc(frame) {
+        var queryString = "single-player=" + frame.camera.primaryStreamId + "&single-player-orchid=" + frame.camera.orchidId;
 
-    // Add Orchid iframe(s) to the page.
-    var container = document.getElementById('players');
-    container.appendChild(frame);
+        // Include the frame ID so that we can locate the origin for postMessage events
+        queryString += "&frame-id=" + frame.id + frame.options;
 
-    // Player reports state using the postMessage API
-    window.addEventListener('message', function(messageEvent) {
-        var event = messageEvent.data.event;
-        console.log("Received " + event.component + " event: " + event.type);
-    });
+        return fusionUri + '?' + queryString;
+    }
+
+    function init() {
+        /*
+        * Player reports state using the postMessage API.  Use a unique identifier on each frame src to determine which frame sent the message.
+        *
+        * For most systems, all but the 'awaiting-auth' event can be safely ignored.
+        *
+        * Event types:
+        *       awaiting-auth     player has loaded and is ready to receive an auth token
+        *       play-jpeg         player is attempting to play with low-bandwidth mode
+        *       play-fbgst        player is attempting to play using the FBGST plugin
+        *       play-webrtc       player is attempting to play using WebRTC
+        *       playing           player has begun playing video
+        *       stop              player has stopped playing video
+        *
+        */
+        window.addEventListener('message', function(messageEvent) {
+            var event = messageEvent.data.event;
+
+            console.log("Received event from " + event.component + " event: " + event.type);
+
+            // awaiting-auth indicates that the player has finished loading and is listening for authorization
+            if (event.type === 'awaiting-auth') {
+                // Figure out which iframe gave us this event
+                var origin = messageEvent.data.origin,
+                    queryString = origin.split('?')[1],
+                    queryStringParts = queryString.split('&'),
+                    key,
+                    value,
+                    originId,
+                    originFrame,
+                    parser;
+
+                // Which frame sent us this message?
+                for (var i = 0; i < queryStringParts.length; ++i) {
+                    parser = queryStringParts[i].split('=');
+                    key = parser[0];
+                    value = parser[1];
+                    if (key === 'frame-id') {
+                        originId = value;
+                        break;
+                    }
+                }
+
+                originFrame = document.getElementById(originId);
+                setJWT(originFrame);
+            }
+        });
+
+        // Add Orchid iframe(s) to the page.
+        var container = document.getElementById('players');
+        container.appendChild(frame);
+
+        setupFrame(frame);
+    }
+    init();
 
 </script>
