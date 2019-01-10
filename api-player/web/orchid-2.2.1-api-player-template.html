@@ -1,0 +1,166 @@
+<style>
+    body {
+      margin: 0px
+    }
+    iframe {
+      width: 100vw;
+      height: 100vh;
+      border: none;
+    }
+  </style>
+  
+  <div id="players"></div>
+  
+  <script>
+      /*
+       * orchid-iframe-example.html
+       * Author: Evan Callaway
+       * Version: 1.0
+       *
+       * Copyright 2016 IPConfigure, Inc.
+       *
+       * An example file demonstrating how to play Orchid streams within an iframe.
+       * 
+       * JSON web tokens (JWTs) are used to authorize Orchids in single player mode.  For this example we are 
+       * going to leverage Fusion, an Orchid management server, to produce JWTs.  This is done by first 
+       * authenticating with Fusion and then requesting JWTs from its tokens service.
+       *
+       * If you would prefer to generate your own JWTs, please reference the Authentication - JSON Web Token 
+       * portion of the Orchid API documentation (http://www.ipconfigure.com/pdf/Orchid_Web_Service_API.pdf) 
+       * for details.  Please note that you will be required to share a JSON Web Key (JWK) with Orchid by 
+       * creating a Trused Issuer and then use that JWK to generate valid JWTs.
+       *
+       * To begin single player mode, create an iframe with the src set to an Orchid URI and add 
+       * "single-player=<stream-id>" as a query string.  Stream ids can be obtained via the Orchid API.  Once
+       * the iframe has finished loading, generate a JWT and use postMessage to pass it into the frame.  JWTs 
+       * expire after a configurable amount of time, so JWTs must be renewed periodically prior to their 
+       * expiration.
+       *
+       * To remove the controls from the Orchid timeline bar append "hide-controls=true" to the Orchid URI's 
+       * query string.
+       *
+       * To remove the timeline bar itself from the player, append "hide-timeline=true" to the Orchid URI's
+       * query string.
+       *
+       * To allow users to enable PTZ control in the player, append "single-player-ptz=1" to the Orchid URI's
+       * query string.
+       *
+       * NOTES:
+       * 
+       * By default Orchid's Trusted Issuser endpoint "/service/trusted/issuer" is empty.  This is why you may 
+       * receive a 404 when you performed a GET on "/service/trusted/issuer".  In order to use JWT based 
+       * authentication you must first exchange a shared secret (JSON Web Key (JWK)).  The shared secret is 
+       * exchanged via POST "/service/trusted/issuer"
+        * 
+       * Listed below is an example curl command that creates a Trusted Issuer.  Before running the command 
+       * replace "<password>" with the admin password:
+       *
+       *  $ curl -X POST -u admin:<password> -d '{"id": "01bb7740-21e1-11e6-81db-0002a5d5c51b", "access_token": \
+       *        "", "key": {"kty": "oct", "k": "mefcwbUTxYZHLa_EalRisajyFZD8dCLHYkcBQ1mWuiA"},"description": "",\
+       *        "uri": ""}' "http://localhost:999/service/trusted/issuer"
+       * 
+       * This should create a Trusted Issuer using the following JWK
+       * {
+         *      "kty": "oct",
+         *     "k": "mefcwbUTxYZHLa_EalRisajyFZD8dCLHYkcBQ1mWuiA"
+       * }
+       * 
+       * Note - The JWK must be 32 bytes (base64url encoded) and of type "oct".
+       * 
+       * If the command runs successfully an HTTP 200 is returned, including the newly created Trusted 
+       * Issuer enpoint.  Orchid should now be able to authenticate requests using JSON Web Tokens (JWT) 
+       * signed with the registered shared secret (JWK).
+       *
+       */
+  
+      var fusionUri = '%FUSION_URI%';
+  
+      // Set up authorization tokens for authorizing actions with Orchid.
+      function init(frame) {
+          getFusionToken(function(token) {
+  
+              frame.authToken = token;
+  
+              // Set first JWT.
+              renewJWT(frame);
+  
+              // Renewing JWT every 60 seconds. set this interval based on JWT expiration time.
+              window.setInterval(function() {
+                  renewJWT(frame);
+              }, 60000);
+          });
+      }
+  
+      // Pass Orchid auth token into the frame.
+      function setJWT(frame, jwt) {
+          frame.contentWindow.postMessage({'jwt': jwt}, '*');
+      }
+  
+      /*
+       * Fetch Orchid JWT and pass it into the frame.
+       *
+       * We are pulling JWTs from Fusion, an Orchid management server.  If you do not wish to use Fusion
+       * for JWT generation, you must first create a trusted issuer and generate JWTs from the associated
+       * JWK. 
+       *
+       */
+      function renewJWT(frame) {
+          // create an AJAX request to fetch JWTs from Fusion
+          var xhttp = new XMLHttpRequest();
+            xhttp.open("GET", fusionUri + "/fusion/tokens?type=orchid", true);
+          xhttp.setRequestHeader("Authorization", "Bearer " + frame.authToken);
+          xhttp.onreadystatechange = function() {
+              if (xhttp.readyState === 4 && xhttp.status === 200) {
+                  // Success-- retrieve our JWT from the response
+                  var jwt = JSON.parse(xhttp.responseText)[frame.orchidId];
+                  console.warn("SET JWT", jwt);
+                  setJWT(frame, jwt);
+              }
+          };
+          xhttp.send();
+      }
+  
+      /*
+       * Authenticate with Fusion and get an auth token so that we can request Orchid auth tokens.
+       *
+       */
+      function getFusionToken(callback) {
+          var data = JSON.stringify({
+            "username": "%USERNAME%",
+            "password": "%PASSWORD%",
+            "expiresIn": "999999999",
+            "cookie": "session"
+          });
+  
+          // create AJAX request to authenticate with Fusion
+          var xhttp = new XMLHttpRequest();
+          xhttp.withCredentials = true;
+          xhttp.open("POST", fusionUri + "/fusion/users/login");
+          xhttp.setRequestHeader("content-type", "application/json");
+          xhttp.onreadystatechange = function() {
+              if (this.readyState === 4 && xhttp.status === 200) {
+                  callback(JSON.parse(xhttp.responseText)["token"]);
+              }
+          };
+          xhttp.send(data);
+      }
+  
+      // Create an iframe for each player.
+      var frame = document.createElement('iframe');
+      
+      // Only attempt to set auth after Orchid has loaded.
+      frame.setAttribute('onload', 'init(this)');
+      
+      /*
+       * Set iframe source for your streams.  See Orchid API documentation for obtaining stream ids.
+       *
+       * format: http(s)://orchid-uri/?single-player=<stream-id>[&hide-controls=true]
+       *
+       */
+      frame.src = "%ORCHID_URI%?single-player=%STREAM_ID%%OPTIONS%";
+      frame.orchidId = "%ORCHID_ID%";
+      
+      // Add Orchid iframe(s) to the page.
+      var container = document.getElementById('players');
+      container.appendChild(frame);
+  </script>

@@ -10,12 +10,27 @@ var orchids = [],
     sourceText,
     playerSource;
 
+function getOrchid() {
+    var orchidId = cameraSelect.value.split('|')[0],
+        orchid;
+
+    for (var i = 0; i < orchids.length; ++i) {
+        if (orchids[i].id === orchidId) {
+            orchid = orchids[i];
+            break;
+        }
+    }
+
+    return orchid;
+}
+
 function buildApiPlayer() {
     var orchidId = cameraSelect.value.split('|')[0],
         streamId = cameraSelect.value.split('|')[1],
         checkboxes = document.getElementsByClassName('option-checkbox'),
         optionsString = '',
-        orchidUri;
+        orchidUri,
+        templateUrl;
 
     sourceContainer.innerHTML = '';
     playerContainer.src = 'about:blank';
@@ -31,12 +46,7 @@ function buildApiPlayer() {
     playerContainer.style.display = "block";
     sourceContainer.style.display = "block";
 
-    for (var i = 0; i < orchids.length; ++i) {
-        if (orchids[i].id === orchidId) {
-            orchidUri = orchids[i].uri;
-            break;
-        }
-    }
+    orchidUri = getOrchid().uri;
 
     for (var i = 0; i < checkboxes.length; ++i) {
         if (checkboxes[i].checked) {
@@ -44,8 +54,14 @@ function buildApiPlayer() {
         }
     }
 
+    templateUrl = typeSelect.value;
+    if (typeSelect.value === 'orchid' && compatibilityToggle.checked) {
+        templateUrl += '-2.2.1';
+    }
+    templateUrl += "-api-player-template.html";
+
     // Grab the appropriate template for our player type
-    templateRequest.open("GET", typeSelect.value + "-api-player-template.html");
+    templateRequest.open("GET", templateUrl);
     templateRequest.withCredentials = true;                
     templateRequest.onreadystatechange = function() {
         if (templateRequest.readyState === 4 && templateRequest.status === 200) {
@@ -72,7 +88,7 @@ function buildApiPlayer() {
 
 function fetchOrchids(callback) {
     // This request is performed using the signed-in user's cookie
-    request.open("GET", "/service/orchids", true);
+    request.open("GET", "/fusion/orchids", true);
     request.withCredentials = true;                
     request.onreadystatechange = function() {
         if (request.readyState === 4 && request.status === 200) {
@@ -98,6 +114,8 @@ function findElements() {
     passwordInput = document.getElementById('password');
     playerContainer = document.getElementById('player-container');
     sourceContainer = document.getElementById('source-container');
+    compatibilityToggle = document.getElementById('compatibility');
+    compatibilityContainer = document.getElementById('compatibility-container');
 }
 
 function populateList() {
@@ -120,10 +138,34 @@ function populateList() {
     M.FormSelect.init(cameraSelect, {});
     M.FormSelect.init(typeSelect, {});
     M.updateTextFields();
+    setCompatibility();
+    updateFields('fusion');
 }
 
 function resizeFrame() {
     parent.postMessage({ type: 'resize' }, window.location.origin);
+}
+
+function updateFields(playerType) {
+    if (playerType === 'fusion') {
+        compatibilityContainer.style.display = 'none';
+    } else {
+        compatibilityContainer.style.display = 'block';
+    }
+}
+
+function setCompatibility() {
+    var orchid = getOrchid(),
+        versionParts = orchid.version.version.split('.');
+
+    if (!(i === 0 && versionParts[i] === '0')) {
+        for (var i = 0; i < versionParts.length; ++i) {
+            if (parseInt(versionParts[i]) < 2) {
+                compatibilityToggle.checked = true;
+                break;
+            }
+        }
+    }
 }
 
 window.onload = function() {

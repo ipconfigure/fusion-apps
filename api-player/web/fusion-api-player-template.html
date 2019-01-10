@@ -1,88 +1,86 @@
-<style>
-  body {
-    margin: 0px
-  }
-  iframe {
-    width: 100vw;
-    height: 100vh;
-    border: none;
-  }
-</style>
-    
-<div id="players"></div>
-    
-<script>
-    /*
-    * fusion-iframe-example.html
-    * Author: Evan Callaway
-    * Version: 1.0
-    *
-    * Copyright 2017 IPConfigure, Inc.
-    *
-    * An example file demonstrating how to play Orchid streams through Fusion within an iframe.
-    *
-    */
+<html>
+    <head>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
+    </head>
+    <body style="padding: 15px">
+        <div class="card" >
+            <div class="card-content" id="api-player-generator">
+                <div class="input-field">
+                    <select class="select-dropdown dropdown-trigger" id="cameras-list" onchange="setCompatibility()">
+                    </select>
+                    <label>Camera</label>            
+                </div>
+                <div class="input-field">
+                    <input id="username" type="text" class="validate">
+                    <label for="username">Fusion Username</label>
+                </div>
+                <div class="input-field">
+                    <input id="password" type="text" class="validate">
+                    <label for="password">Fusion Password (plaintext)</label>
+                </div>
 
-    var fusionUri = '%FUSION_URI%';
+                <div class="input-field">
+                    <select class="select-dropdown dropdown-trigger" id="type-list" onchange="updateFields(this.value)">
+                        <option value="fusion">Fusion</option>
+                        <option value="orchid">Orchid</option>
+                    </select>
+                    <label>API Player Type</label>
+                </div>
 
-    // Pass Fusion auth token into the frame.
-    function setJWT(frame, jwt) {
-        frame.contentWindow.postMessage({'jwt': jwt}, '*');
-    }
+                <div>
+                    <p id="compatibility-container">
+                        <label>
+                            <input type="checkbox" id="compatibility" class="filled-in"/>
+                            <span>Compatible with Orchid version 2.2.1 and below</span>
+                        </label>
+                    </p>
+                    <p>
+                        <label>
+                            <input type="checkbox" id="single-player-ptz" class="filled-in option-checkbox"/>
+                            <span>Enable PTZ</span>
+                        </label>
+                    </p>
+                    <p>
+                        <label>
+                            <input type="checkbox" id="force-fbgst" class="filled-in option-checkbox"/>
+                            <span>Enable FBGST</span>
+                        </label>
+                    </p>
+                    <p>
+                        <label>
+                            <input type="checkbox" id="disable-webrtc" class="filled-in option-checkbox"/>
+                            <span>Disable WebRTC</span>
+                        </label>
+                    </p> 
+                    <p>
+                        <label>
+                            <input type="checkbox" id="hide-timeline" class="filled-in option-checkbox"/>
+                            <span>Hide Timeline</span>
+                        </label>
+                    </p>
+                    <p>
+                        <label>
+                            <input type="checkbox" id="hide-controls" class="filled-in option-checkbox"/>
+                            <span>Hide Controls</span>
+                        </label>
+                    </p>
+                    <p>
+                        <label>
+                            <input type="checkbox" id="show-header" class="filled-in option-checkbox"/>
+                            <span>Show Player Header</span>
+                        </label>
+                    </p>
+                </div>
+                <a class="waves-effect waves-light btn" style="margin-top: 20px" onclick="buildApiPlayer()">Generate API Player</a>
 
-    // Pass an auth token into the Fusion iframe
-    function init(frame) {
-        getFusionToken(function(token) {
-            setJWT(frame, token);
-        });
-    }
+                <div  style="width: 640px; height: 480px; overflow: auto; -webkit-overflow-scrolling: touch; margin: 20px 0px;">
+                    <iframe id="player-container" style="width: 100%; height: 100%; border: none; display: none"></iframe>
+                </div>
+                <code id="source-container" style="white-space: pre-wrap; background: antiquewhite; padding: 10px; border: 1px solid #888; display: none"></code>
+            </div>
+        </div>
 
-    /*
-    * Authenticate with Fusion and get an auth token
-    *
-    */
-    function getFusionToken(callback) {
-        var data = JSON.stringify({
-          "username": "%USERNAME%",
-          "password": "%PASSWORD%"
-        });
-
-        // create AJAX request to authenticate with Fusion
-        var xhttp = new XMLHttpRequest();
-        xhttp.withCredentials = true;
-        xhttp.open("POST", fusionUri + "/fusion/users/login");
-        xhttp.setRequestHeader("content-type", "application/json");
-        xhttp.onreadystatechange = function() {
-            if (this.readyState === 4 && xhttp.status === 200) {
-                callback(JSON.parse(xhttp.responseText)["token"]);
-            }
-        };
-        xhttp.send(data);
-    }
-
-    // Create an iframe for the player.
-    var frame = document.createElement('iframe');
-
-    // Only attempt to set auth after Fusion has loaded.
-    frame.setAttribute('onload', 'init(this)');
-
-    /*
-    * Set iframe source for your streams.  See Orchid API documentation for obtaining stream ids.
-    *
-    * format: http(s)://fusion-uri/?single-player-orchid=<orchid-id>&single-player=<stream-id>[&hide-controls=true][&hide-timeline=true][&single-player-ptz=true]
-    *
-    */
-    
-    frame.src = fusionUri + "/?single-player-orchid=%ORCHID_ID%&single-player=%STREAM_ID%%OPTIONS%";
-
-    // Add Orchid iframe(s) to the page.
-    var container = document.getElementById('players');
-    container.appendChild(frame);
-
-    // Player reports state using the postMessage API
-    window.addEventListener('message', function(messageEvent) {
-        var event = messageEvent.data.event;
-        console.log("Received " + event.component + " event: " + event.type);
-    });
-
-</script>
+        <script type="text/javascript" src="api-player-generator.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+    </body>
+</html>
